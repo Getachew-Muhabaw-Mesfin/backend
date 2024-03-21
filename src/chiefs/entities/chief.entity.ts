@@ -1,9 +1,9 @@
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
+  Entity,
   ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { CEO } from "../../ceo/entities/ceo.entity";
 import { Departments } from "../../departments/entities/department.entity";
@@ -20,8 +20,8 @@ export class Chiefs {
   description: string;
 
   @ManyToOne(() => CEO, (ceo) => ceo.chiefs)
-  reportTo: CEO;
+  ceo: CEO;
 
   @OneToMany(() => Departments, (department) => department.chief)
-  manages: Departments[];
+  departments: Departments[];
 }

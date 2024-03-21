@@ -4,15 +4,32 @@ import { UpdateChiefDto } from "./dto/update-chief.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Chiefs } from "./entities/chief.entity";
+import { CEO } from "../ceo/entities/ceo.entity";
 
 @Injectable()
 export class ChiefsService {
   constructor(
     @InjectRepository(Chiefs)
     private chiefRepository: Repository<Chiefs>,
+    @InjectRepository(CEO) // Inject CEO repository
+    private ceoRepository: Repository<CEO>, // Inject CEO repository
   ) {}
+
   async create(createChiefDto: CreateChiefDto) {
-    const chief = this.chiefRepository.create(createChiefDto);
+    const { ceoId, ...chiefData } = createChiefDto;
+
+    // Check if CEO with given ceoId exists
+    const ceo = await this.ceoRepository.findOne({ where: { id: ceoId } });
+    if (!ceo) {
+      throw new NotFoundException(`CEO with ID ${ceoId} not found`);
+    }
+
+    // Associate CEO with Chief entity
+    const chief = this.chiefRepository.create({
+      ...chiefData,
+      ceo: ceo, // Assign CEO entity to chief
+    });
+
     return await this.chiefRepository.save(chief);
   }
 

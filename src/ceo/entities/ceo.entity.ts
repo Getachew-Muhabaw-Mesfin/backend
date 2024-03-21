@@ -18,6 +18,6 @@ export class CEO {
   @Column()
   description: string;
 
-  @OneToMany(() => Chiefs, (chief) => chief.reportTo)
+  @OneToMany(() => Chiefs, (chief) => chief.ceo)
   chiefs: Chiefs[];
 }

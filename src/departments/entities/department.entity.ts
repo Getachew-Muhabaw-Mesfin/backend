@@ -13,6 +13,6 @@ export class Departments {
   @Column()
   description: string;
 
-  @ManyToOne(() => Chiefs, (chief) => chief.reportTo)
+  @ManyToOne(() => Chiefs, (chief) => chief.departments)
   chief: Chiefs;
 }
