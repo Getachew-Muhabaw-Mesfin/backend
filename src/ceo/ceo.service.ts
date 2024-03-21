@@ -20,7 +20,7 @@ export class CeoService {
   }
 
   async findOne(id: number) {
-    return this.CeoRepository.findOne({ where: { id } });
+    return await this.CeoRepository.findOne({ where: { id } });
   }
 
   async update(id: number, updateCeoDto: UpdateCeoDto) {

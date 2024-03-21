@@ -1,6 +1,7 @@
 export class CreateChiefDto {
   name: string;
   description: string;
-  reportTo: number;
-  manages: number[];
+  reportToId: number;
+  managesId: number;
+  // managesId: number[];
 }
