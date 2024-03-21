@@ -1,6 +1,6 @@
 export class CreateCeoDto {
-  company_name: string;
-  ceo_name: string;
+  companyName: string;
+  ceoName: string;
   name: string;
   description: string;
 }

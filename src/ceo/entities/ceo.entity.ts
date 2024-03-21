@@ -7,10 +7,10 @@ export class CEO {
   id: number;
 
   @Column()
-  company_name: string;
+  companyName: string;
 
   @Column()
-  ceo_name: string;
+  ceoName: string;
 
   @Column()
   name: string;
