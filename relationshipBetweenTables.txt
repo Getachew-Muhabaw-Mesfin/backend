@@ -1,0 +1,6 @@
+With these changes, we have established the following relationships:
+
+Each CEO can have multiple Chiefs (OneToMany).
+Each Chief belongs to a single CEO (ManyToOne).
+Each Chief can have multiple Departments (OneToMany).
+Each Department belongs to a single Chief (ManyToOne).

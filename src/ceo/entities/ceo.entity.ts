@@ -12,6 +12,12 @@ export class CEO {
   @Column()
   ceo_name: string;
 
+  @Column()
+  name: string;
+
+  @Column()
+  description: string;
+
   @OneToMany(() => Chiefs, (chief) => chief.ceo)
   chiefs: Chiefs[];
 }
