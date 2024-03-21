@@ -20,8 +20,8 @@ export class Chiefs {
   description: string;
 
   @ManyToOne(() => CEO, (ceo) => ceo.chiefs)
-  ceo: CEO;
+  reportTo: CEO;
 
   @OneToMany(() => Departments, (department) => department.chief)
-  departments: Departments[];
+  manages: Departments[];
 }
