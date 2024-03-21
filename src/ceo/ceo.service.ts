@@ -1,26 +1,43 @@
-import { Injectable } from '@nestjs/common';
-import { CreateCeoDto } from './dto/create-ceo.dto';
-import { UpdateCeoDto } from './dto/update-ceo.dto';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { CreateCeoDto } from "./dto/create-ceo.dto";
+import { UpdateCeoDto } from "./dto/update-ceo.dto";
+import { Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
+import { CEO } from "./entities/ceo.entity";
 
 @Injectable()
 export class CeoService {
-  create(createCeoDto: CreateCeoDto) {
-    return 'This action adds a new ceo';
+  constructor(
+    @InjectRepository(CEO) private readonly CeoRepository: Repository<CEO>,
+  ) {}
+  async create(createCeoDto: CreateCeoDto) {
+    const ceo = this.CeoRepository.create(createCeoDto);
+    return await this.CeoRepository.save(ceo);
   }
 
-  findAll() {
-    return `This action returns all ceo`;
+  async findAll() {
+    return await this.CeoRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} ceo`;
+  async findOne(id: number) {
+    return this.CeoRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateCeoDto: UpdateCeoDto) {
-    return `This action updates a #${id} ceo`;
+  async update(id: number, updateCeoDto: UpdateCeoDto) {
+    const ceo = await this.findOne(id);
+    if (!ceo) {
+      throw new NotFoundException(`Ceo #${id} not found`);
+    }
+    Object.assign(ceo, updateCeoDto);
+
+    return this.CeoRepository.save(ceo);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} ceo`;
+  async remove(id: number) {
+    const ceo = await this.findOne(id);
+    if (!ceo) {
+      throw new NotFoundException(`Ceo #${id} not found`);
+    }
+    return this.CeoRepository.remove(ceo);
   }
 }
